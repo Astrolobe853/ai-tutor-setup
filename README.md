@@ -36,6 +36,20 @@ The AI is configured via a `CLAUDE.md` file to follow specific tutoring rules:
 When you begin a session, the AI will ask you what you're studying and what your goals are. 
 - **Tip**: Use a markdown preview (like the one in Obsidian or Neovim) to see the LaTeX equations render in real-time as the AI writes to your session files.
 
+## 🚀 Optional Enhancements
+
+### Local LLMs with Ollama
+If you prefer to run your tutor locally for privacy or offline access:
+- Install [Ollama](https://ollama.com/).
+- Pull a capable model (e.g., `ollama run llama3` or `mistral`).
+- Point your AI CLI or agent to the local Ollama endpoint.
+
+### Advanced Neovim Setup
+For the most seamless experience, use Neovim with a live markdown preview:
+- **Plugin Recommendation**: Use `markdown-preview.nvim` to see LaTeX render as you work.
+- **Workflow**: Keep the session file open in one pane and the preview in a browser tab. This allows the AI to write solutions and you to see them formatted instantly.
+
+
 ## 📖 Why This Works
 By separating the **Knowledge** (the vault) from the **Interaction** (the session logs), you create a permanent record of your learning journey. The `CLAUDE.md` configuration prevents the AI from becoming a "cheat sheet" and turns it into a coach that pushes you to understand the *why* behind every answer.
 # ai-tutor-setup
