@@ -1,55 +1,190 @@
-# AI Study Workflow Template
+# Terminal-Based AI Study Workflow
 
-This repository provides a framework for using AI (specifically Claude Code) as a rigorous, personalized tutor integrated with an Obsidian knowledge vault. 
+A framework for using **Claude Code** as a rigorous, personalized tutor,
+integrated with an Obsidian knowledge vault.
 
-Instead of just asking an AI for answers, this workflow treats the AI as a pedagogical guide that manages your progress, tracks your weaknesses, and ensures you're actually learning the material.
+Instead of asking an AI for answers, this workflow treats it as a
+**pedagogical coach**. One that manages your progress, tracks your
+weaknesses, and ensures you're actually learning the material.
 
-## 🚀 The Workflow Architecture
+---
+
+## Why This Works
+
+Most people use AI as a search engine. This workflow uses it as a tutor
+that enforces three rules:
+
+- **Hint-first**: It will never give you the answer immediately
+- **Proof of work**: You must show your steps before any solution is confirmed
+- **Progressive difficulty**: Every session scales from warmup → easy → medium → hard → challenge
+
+By separating your **knowledge** (the vault) from your **interactions**
+(session logs), you build a permanent, searchable record of your learning.
+`CLAUDE.md` prevents the AI from becoming a cheat sheet and turns it into
+a coach that pushes you to understand the *why* behind every answer.
+
+---
+
+## Requirements
+
+- [Claude Code](https://claude.ai/code) (or any AI CLI)
+- [Obsidian](https://obsidian.md/) for the knowledge vault
+- [Neovim](https://neovim.io/) 0.9+ with `markdown-preview.nvim` *(optional but recommended)*
+- Node.js & npm *(for markdown-preview.nvim)*
+
+---
+
+## Architecture
+
+The workflow has two components that work together:
 
 ### 1. The Knowledge Vault (Obsidian)
-The workflow uses a hierarchical "Hub and Spoke" system:
-- **Main Index**: The top-level entry point.
-- **Hubs**: Broad category organizers (e.g., "Integration", "Organic Chemistry Basics").
-- **Topics**: Detailed notes for specific concepts.
-- **Sessions**: Dated logs (`YYYY-MM-DD.md`) that store the actual problems and solutions generated during a session.
 
-### 2. The AI Tutor (Claude Code)
-The AI is configured via a `CLAUDE.md` file to follow specific tutoring rules:
-- **Hint-First Approach**: It will never give you the answer immediately.
-- **Proof of Work**: It requires you to show your steps before confirming a solution.
-- **Technical Rigor**: It uses strict LaTeX formatting for mathematical and technical expressions to ensure perfect rendering in Obsidian and Neovim.
-- **Progressive Difficulty**: It manages a "Warmup $\rightarrow$ Easy $\rightarrow$ Medium $\rightarrow$ Hard $\rightarrow$ Challenge" progression.
+A hierarchical **Hub and Spoke** system:
 
-## 🛠️ Setup Guide
+| Layer | Purpose | Example |
+|---|---|---|
+| **Main Index** | Top-level entry point | `Index.md` |
+| **Hubs** | Broad category organizers | `Integration.md`, `Organic Chemistry.md` |
+| **Topics** | Detailed concept notes | `U-Substitution.md` |
+| **Sessions** | Dated problem/solution logs | `2026-05-05.md` |
 
-### Step 1: Set Up Your Vault
-1. Clone this repository or copy the `Template-Vault` folder into your Obsidian vault.
-2. Use the `Prompts/obsidian-setup-prompt.md` with an AI to map your specific course syllabus to the Hubs and Topics structure.
-3. Create your files based on the provided templates.
+Session files are written by the AI in real-time during your tutoring
+session, giving you a permanent log of every problem you've worked through.
 
-### Step 2: Configure Your AI Tutor
-1. Copy `Prompts/CLAUDE.md` into the root of your project directory.
-2. Replace `[Subject Name]` with the subject you are studying.
-3. Start a session with Claude Code.
+### 2. The AI Tutor (`CLAUDE.md`)
 
-### Step 3: Start Learning
-When you begin a session, the AI will ask you what you're studying and what your goals are. 
-- **Tip**: Use a markdown preview (like the one in Obsidian or Neovim) to see the LaTeX equations render in real-time as the AI writes to your session files.
+The AI is configured via a `CLAUDE.md` file placed in your project root.
+Claude Code reads this automatically at the start of every session.
 
-## 🚀 Optional Enhancements
+Key behaviours it enforces:
 
-### Local LLMs with Ollama
-If you prefer to run your tutor locally for privacy or offline access:
-- Install [Ollama](https://ollama.com/).
-- Pull a capable model (e.g., `ollama run llama3` or `mistral`).
-- Point your AI CLI or agent to the local Ollama endpoint.
+- **Hint-first approach** — never gives answers immediately
+- **Proof of work** — requires you to show steps before confirming
+- **Strict LaTeX formatting** — all math renders correctly in Obsidian and Neovim
+- **Weak area tracking** — maintains a running list of topics to revisit
+- **Progressive difficulty** — warmup → easy → medium → hard → challenge
 
-### Advanced Neovim Setup
-For the most seamless experience, use Neovim with a live markdown preview:
-- **Plugin Recommendation**: Use `markdown-preview.nvim` to see LaTeX render as you work.
-- **Workflow**: Keep the session file open in one pane and the preview in a browser tab. This allows the AI to write solutions and you to see them formatted instantly.
+---
 
+## Setup Guide
 
-## 📖 Why This Works
-By separating the **Knowledge** (the vault) from the **Interaction** (the session logs), you create a permanent record of your learning journey. The `CLAUDE.md` configuration prevents the AI from becoming a "cheat sheet" and turns it into a coach that pushes you to understand the *why* behind every answer.
-# ai-tutor-setup
+### Step 1 — Requirements
+
+Make sure you have Claude Code and Obsidian installed before continuing.
+
+### Step 2 — Set Up Your Vault
+
+1. Clone this repository and copy the `Template-Vault/` folder into your
+   Obsidian vault directory
+2. Add your course materials (lecture notes, textbook PDFs, past exams)
+   to the relevant Hub folders
+3. Use `Prompts/obsidian-setup-prompt.md` with an AI to map your course
+   syllabus to the Hub and Topic structure automatically
+4. Create your topic files using the provided templates
+
+### Step 3 — Configure Your Tutor
+
+1. Copy `Prompts/CLAUDE.md` into the **root of your project directory**
+2. Replace all `[Subject Name]` placeholders with your subject
+3. Add a **Weak Areas** section — instruct Claude to update it
+   automatically as gaps are discovered during sessions
+4. Launch Claude Code from the same directory:
+
+```bash
+cd your-project/
+claude
+```
+
+### Step 4 — Start a Session
+
+Claude will open by asking what you're studying and what your goals are
+for the session. From there it manages the rest.
+
+> **Tip:** Open your session file (`Sessions/YYYY-MM-DD.md`) in Neovim
+> with `:MarkdownPreview` running so you see LaTeX equations render
+> in real-time as the AI writes them.
+
+---
+
+## Recommended Neovim Setup
+
+For the best experience, use Neovim with a live markdown preview:
+
+1. Install [lazy.nvim](https://github.com/folke/lazy.nvim) as your plugin manager
+2. Add `markdown-preview.nvim` to your `init.lua`:
+
+```lua
+{
+  "iamcco/markdown-preview.nvim",
+  build = "cd app && npm install",
+  ft = { "markdown" },
+  config = function()
+    vim.g.mkdp_auto_start = 0
+    vim.g.mkdp_theme = 'dark'
+  end,
+}
+```
+
+3. Split your workspace: session file in Neovim, live preview in a browser tab
+
+KDE users: use Meta + arrow keys to tile Konsole and the browser side by side.
+
+---
+
+## Optional: Local LLMs with Ollama
+
+If you prefer to run a model locally for privacy or offline access:
+
+1. Install [Ollama](https://ollama.com/)
+2. Pull a model:
+```bash
+ollama run llama3
+# or
+ollama run mistral
+```
+3. Point your AI CLI to the local Ollama endpoint
+
+> ⚠️ **Note:** Local models are free and private, but significantly weaker
+> than Claude for rigorous STEM tutoring — especially for multi-step proofs,
+> calculus, and chemistry. Expect more errors and less pedagogical structure.
+> Recommended only if privacy or cost is a hard constraint.
+
+---
+
+## Roadmap
+
+- [ ] Google Classroom / D2L scraper to auto-populate vault with course material
+- [ ] Session summary auto-generator (weekly review notes)
+- [ ] Anki flashcard export from session logs
+- [ ] Multi-subject CLAUDE.md templates (Calculus, Organic Chemistry, Physics)
+
+---
+
+## Repository Structure
+.\
+├── README.md\
+├── CLAUDE.md                  # AI tutor configuration (template)\
+├── Template-Vault/\
+│   ├── Index.md\
+│   ├── Hubs/\
+│   ├── Topics/\
+│   └── Sessions/\
+├── Prompts/\
+│   ├── CLAUDE.md\
+│   └── obsidian-setup-prompt.md\
+└── nvim/\
+└── init.lua               # Neovim config\
+
+---
+
+## Contributing
+
+Contributions welcome — especially CLAUDE.md templates for other subjects.
+Open a PR or file an issue if you have ideas.
+
+---
+
+## License
+
+MIT
