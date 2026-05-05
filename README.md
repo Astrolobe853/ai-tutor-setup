@@ -184,7 +184,3 @@ Contributions welcome — especially CLAUDE.md templates for other subjects.
 Open a PR or file an issue if you have ideas.
 
 ---
-
-## License
-
-MIT
