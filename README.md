@@ -180,7 +180,7 @@ ollama run mistral
 
 ## Contributing
 
-Contributions welcome — especially CLAUDE.md templates for other subjects.
+Contributions welcome especially CLAUDE.md templates for other subjects.
 Open a PR or file an issue if you have ideas.
 
 ---
