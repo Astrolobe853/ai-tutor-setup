@@ -7,6 +7,8 @@ Instead of asking an AI for answers, this workflow treats it as a
 **pedagogical coach**. One that manages your progress, tracks your
 weaknesses, and ensures you're actually learning the material.
 
+<img width="2557" height="1397" alt="Image" src="https://github.com/user-attachments/assets/3e22e35f-43e5-4a1a-bf9e-4ff13a9b065e" />
+
 ---
 
 ## Why This Works
